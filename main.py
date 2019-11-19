@@ -70,6 +70,10 @@ data = pd.DataFrame({
 data = data_to_indicators(data, o, h, l, c, v, window=10)
 data = data[100:-100]
 
+# =========================
+# PRELIMINARY DATA ANALYSIS
+# =========================
+
 minutes = 390
 day = 1
 plt.plot(data[c].values[day * minutes:(day + 1) * minutes])
@@ -102,11 +106,6 @@ X_test = normalize_test(X_test, X_mean, X_std)
 
 y_train, y_mean, y_std = normalize(y_train)
 y_test = normalize_test(y_test, y_mean, y_std)
-
-# =========================
-# PRELIMINARY DATA ANALYSIS
-# =========================
-
 
 # ==============
 # MODEL CREATION
