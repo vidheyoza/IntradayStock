@@ -103,3 +103,15 @@ def normalize_test(data, m, s):
     :return: Normalized data
     """
     return (data - m) / s
+
+
+def inverse_normalize(data, m, s):
+    """
+    Performs inverse Z-score normalization
+
+    :param data: Normalized array
+    :param m: Original mean of data
+    :param s: Original standard deviation
+    :return: De-normalized data
+    """
+    return (data * s) + m
