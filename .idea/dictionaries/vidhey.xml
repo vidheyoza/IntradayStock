@@ -1,7 +1,11 @@
 <component name="ProjectDictionaryState">
   <dictionary name="vidhey">
     <words>
+      <w>adaboost</w>
+      <w>keras</w>
+      <w>mape</w>
       <w>regressor</w>
+      <w>rmse</w>
       <w>xgboost</w>
     </words>
   </dictionary>

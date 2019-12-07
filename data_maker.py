@@ -23,6 +23,8 @@ def data_to_indicators(data, o, h, l, c, v, window) -> pd.DataFrame:
     df['rsi_' + str(window)] = rsi(df[c], n=window)
     df['wr_' + str(window)] = wr(df[h], df[l], df[c], lbp=window)
     df['mfi_' + str(window)] = money_flow_index(df[h], df[l], df[c], df[v], n=window)
+    df['stochk_' + str(window)] = stoch(df[h], df[l], df[c], n=window)
+    df['stochd_' + str(window)] = stoch_signal(df[h], df[l], df[c], n=window, d_n=3)
 
     # ROC
     df['roc_' + str(window)] = [(df[c][i] - df[c][i - window]) / df[c][i - window] if i >= window else np.nan
@@ -49,9 +51,6 @@ def data_to_indicators(data, o, h, l, c, v, window) -> pd.DataFrame:
     # Volatility
     df['atr_' + str(window)] = average_true_range(df[h], df[l], df[c], n=window)
     df['mass_ind_' + str(window)] = mass_index(df[h], df[l], n=window / 2, n2=window)
-
-    df['bollinger_hband'] = bollinger_hband_indicator(df[c], n=20, ndev=2)
-    df['bollinger_lband'] = bollinger_lband_indicator(df[c], n=20, ndev=2)
 
     # Trends
     # How will model know b/w Ichmoku A and B?
