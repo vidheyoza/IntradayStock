@@ -35,11 +35,12 @@ def plot_error(model_name, y_pred, y_true, path):
     plt.show()
 
 
-def print_results(model_name, data_interval, y_true, y_pred, path):
+def print_results(model_name, stock_name, data_interval, y_true, y_pred, path):
     """
     Plot errors and prices predicted by the given model
 
     :param model_name: String name of model
+    :param stock_name: String name of stock used for training model
     :param data_interval: Interval of data min minutes (only for specifying path)
     :param y_true: True values of y
     :param y_pred: Predicted values of y
@@ -63,7 +64,7 @@ def print_results(model_name, data_interval, y_true, y_pred, path):
     plt.ylabel('Test data points')
     plt.legend()
     plt.title(model_name + 'Results')
-    plt.savefig(path + 'plots/' + str(data_interval) + 'min/' + model_name + '_pred')
+    plt.savefig(path + 'plots/' + str(data_interval) + 'min/' + stock_name + '_' + model_name + '_pred')
     plt.show()
 
 

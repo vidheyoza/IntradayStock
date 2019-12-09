@@ -6,6 +6,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestRegressor, AdaBoostRegressor
 from sklearn.svm import SVR
 from xgboost import XGBRegressor
+from sklearn.externals import joblib
 
 from keras.models import Sequential
 from keras.layers import Dense
@@ -109,18 +110,28 @@ for stock in ['AAPL', 'AMZN', 'MSFT', 'TSLA', 'WMT']:
 
     svr_model = SVR()
     rf_model = RandomForestRegressor(n_estimators=100)
+
     adb_model = AdaBoostRegressor(n_estimators=100)
     xgb_model = XGBRegressor()
 
     svr_model.fit(X_train, y_train)
+    joblib.dump(svr_model, path + 'models/' + str(data_interval) + 'min/svr_' + stock + '.pkl')
+    # svr_model = joblib.load(path+'models/'+str(data_interval)+'min/svr_'+stock+'.pkl')
+
     rf_model.fit(X_train, y_train)
+    joblib.dump(rf_model, path + 'models/' + str(data_interval) + 'min/rf_' + stock + '.pkl')
+    # rf_model = joblib.load(path+'models/'+str(data_interval)+'min/rf_'+stock+'.pkl')
+
     adb_model.fit(X_train, y_train)
+    joblib.dump(adb_model, path + 'models/' + str(data_interval) + 'min/adb_' + stock + '.pkl')
+    # adb_model = joblib.load(path+'models/'+str(data_interval)+'min/adb_'+stock+'.pkl')
+
     xgb_model.fit(X_train, y_train)
+    joblib.dump(xgb_model, path + 'models/' + str(data_interval) + 'min/xgb_' + stock + '.pkl')
+    # xgb_model = joblib.load(path+'models/'+str(data_interval)+'min/xgb_'+stock+'.pkl')
 
     ann_model = Sequential()
     ann_model.add(Dense(100, activation='relu', input_dim=X_train.shape[1]))
-    # ann_model.add(Dropout(0.25))
-    # ann_model.add(Dropout(0.25))
     ann_model.add(Dense(50, activation='relu'))
     ann_model.add(Dense(1, activation='linear'))
 
@@ -131,6 +142,8 @@ for stock in ['AAPL', 'AMZN', 'MSFT', 'TSLA', 'WMT']:
                   epochs=50,
                   # validation_data=(X_test, y_test),
                   verbose=0)
+    ann_model.save_weights(path + 'models/' + str(data_interval) + 'min/ann_' + stock + '.h5')
+    # ann_model.load_weights(path+'models/'+str(data_interval)+'min/ann_'+stock+'.h5')
 
     # ================
     # MODEL EVALUATION
@@ -140,20 +153,20 @@ for stock in ['AAPL', 'AMZN', 'MSFT', 'TSLA', 'WMT']:
 
     # SUPPORT VECTOR REGRESSOR
     y_pred_svr = inverse_normalize(data=svr_model.predict(X_test), m=y_mean, s=y_std)
-    print_results('SVR', data_interval, y_test, y_pred_svr, path=path)
+    print_results('SVR', stock, data_interval, y_test, y_pred_svr, path=path)
 
     # RANDOM FOREST
     y_pred_rf = inverse_normalize(data=rf_model.predict(X_test), m=y_mean, s=y_std)
-    print_results('RandomForest', data_interval, y_test, y_pred_rf, path=path)
+    print_results('RandomForest', stock, data_interval, y_test, y_pred_rf, path=path)
 
     # ADABOOST
     y_pred_adb = inverse_normalize(data=adb_model.predict(X_test), m=y_mean, s=y_std)
-    print_results('AdaBoost', data_interval, y_test, y_pred_adb, path=path)
+    print_results('AdaBoost', stock, data_interval, y_test, y_pred_adb, path=path)
 
     # XGBOOST
     y_pred_xgb = inverse_normalize(data=xgb_model.predict(X_test), m=y_mean, s=y_std)
-    print_results('XGBoost', data_interval, y_test, y_pred_xgb, path=path)
+    print_results('XGBoost', stock, data_interval, y_test, y_pred_xgb, path=path)
 
     # NEURAL NETWORK
     y_pred_ann = inverse_normalize(data=ann_model.predict(X_test), m=y_mean, s=y_std)
-    print_results('ANN', data_interval, y_test, y_pred_ann, path=path)
+    print_results('ANN', stock, data_interval, y_test, y_pred_ann, path=path)
