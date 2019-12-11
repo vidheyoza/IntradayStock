@@ -110,7 +110,6 @@ for stock in ['AAPL', 'AMZN', 'MSFT', 'TSLA', 'WMT']:
 
     svr_model = SVR()
     rf_model = RandomForestRegressor(n_estimators=100)
-
     adb_model = AdaBoostRegressor(n_estimators=100)
     xgb_model = XGBRegressor()
 
