@@ -1,1 +1,1 @@
-You can download the intraday stock market values from https://www.finam.ru/, but your mileage from getting proper data from there varies on how well you (or your browser's translate feature) can read Russian. 
+You can download the intraday stock market OHLCV files from https://www.finam.ru/, but your mileage from getting proper data from there varies on how well you (or your browser's translate feature) can read Russian. 
